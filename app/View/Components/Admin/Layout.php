@@ -16,13 +16,21 @@ class Layout extends Component
     public $title;
 
     /**
+     * The component header.
+     *
+     * @var string
+     */
+    public $header;
+
+    /**
      * Create a new component instance.
      *
      * @param string $title
      */
-    public function __construct($title = '')
+    public function __construct($title = '', $header = '')
     {
         $this->title = $title;
+        $this->header = $header;
     }
 
     /**
