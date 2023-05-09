@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Actions\Contracts\CreatesNews;
+use App\Actions\Contracts\DeletesNews;
+use App\Actions\Contracts\UpdatesNews;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DestroyNewsRequest;
 use App\Http\Requests\StoreNewsRequest;
+use App\Http\Requests\UpdateNewsRequest;
 use App\Models\Category;
 use App\Models\News;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class NewsController extends Controller
@@ -48,9 +51,9 @@ class NewsController extends Controller
         return view('pages.admin.news.edit', compact('news', 'categories'));
     }
 
-    public function update(Request $request, News $news)
+    public function update(UpdatesNews $updater, UpdateNewsRequest $request, News $news)
     {
-        $news->update([
+        $updater->update($news, [
             'title'       => $request->title,
             'content'     => $request->content,
             'category_id' => $request->category_id,
@@ -62,9 +65,9 @@ class NewsController extends Controller
         ]);
     }
 
-    public function destroy(News $news)
+    public function destroy(DeletesNews $deleter, DestroyNewsRequest $request, News $news)
     {
-        $news->delete();
+        $deleter->delete($news);
 
         return redirect()->route('admin.news.index')->with([
             'message' => 'Berita berhasil dihapus',
