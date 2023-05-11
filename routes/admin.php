@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Auth\LoginController;
@@ -20,4 +21,13 @@ Route::controller(NewsController::class)->group(function () {
     Route::get('/news/{news:slug}/edit', 'edit')->name('news.edit');
     Route::put('/news/{news:slug}/edit', 'update')->name('news.update');
     Route::delete('/news/{news:slug}/delete', 'destroy')->name('news.destroy');
+});
+
+Route::controller(CategoryController::class)->group(function () {
+    Route::get('/category', 'index')->name('category.index');
+    Route::get('/category/create', 'create')->name('category.create');
+    Route::post('/category/store', 'store')->name('category.store');
+    Route::get('/category/{category:name}/edit', 'edit')->name('category.edit');
+    Route::put('/category/{category:name}/edit', 'update')->name('category.update');
+    Route::delete('/category/{category:slug}/delete', 'destroy')->name('category.destroy');
 });
